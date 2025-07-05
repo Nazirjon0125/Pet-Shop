@@ -1,23 +1,20 @@
-import Errors, { Message, HttpCode } from "../libs/Errors";
-import { AUTH_TIMER } from "../libs/configs";
-import { Member } from "../libs/types/member";
+import { AUTH_TIMER } from "../libs/config";
+import { Member } from "../libs/types/members";
 import jwt from "jsonwebtoken";
+import Errors, { Message, HttpCode } from "../libs/Errors";
 
 class AuthService {
-  private readonly secretToken;
+  private readonly secretTokin;
   constructor() {
-    this.secretToken = process.env.SECRET_TOKEN as string;
+    this.secretTokin = process.env.SECRET_TOKEN as string;
   }
-
-  public async createToken(payload: Member): Promise<string> {
+  public async createToken(payload: Member) {
     return new Promise((resolve, reject) => {
       const duration = `${AUTH_TIMER}h`;
       jwt.sign(
         payload,
-        this.secretToken, // process.env.SECRET_TOKEN as string,
-        {
-          expiresIn: duration, // token yashash muddati
-        },
+        process.env.SECRET_TOKEN as string,
+        { expiresIn: duration },
         (err, token) => {
           if (err)
             reject(
@@ -32,9 +29,9 @@ class AuthService {
   public async checkAuth(token: string): Promise<Member> {
     const result: Member = (await jwt.verify(
       token,
-      this.secretToken
+      this.secretTokin
     )) as Member;
-    console.log(`--- [AUTH] memberNick: ${result.memberNick} ---`);
+    console.log(`----[AUTH] memberNik: ${result.memberNick} ------`);
     return result;
   }
 }

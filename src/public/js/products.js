@@ -1,7 +1,7 @@
 console.log("Products frontend javascript file");
 
 $(function () {
-  $(".product-collection").on("change", () => {
+  $(".product-collection").on("change", function () {
     const selectedValue = $(".product-collection").val();
     if (selectedValue === "DRINK") {
       $("#product-collection").hide();
@@ -10,7 +10,6 @@ $(function () {
       $("#product-volume").hide();
       $("#product-collection").show();
     }
-    console.log("nima", selectedValue);
   });
 
   $("#process-btn").on("click", () => {
@@ -20,7 +19,7 @@ $(function () {
 
   $("#cancel-btn").on("click", () => {
     $(".dish-container").slideToggle(100);
-    $("#cancel-btn").css("display", "flex");
+    $("#process-btn").css("display", "flex");
   });
 
   $(".new-product-status").on("change", async function (e) {
@@ -29,11 +28,12 @@ $(function () {
 
     try {
       const response = await axios.post(`/admin/product/${id}`, {
-        productStatus: productStatus,
+        productStatus: productStatus
       });
       console.log("response:", response);
       const result = response.data;
       if (result.data) {
+        console.log("Product updated!");
         $(".new-product-status").blur();
       } else alert("Product update failed!");
     } catch (err) {
@@ -59,21 +59,20 @@ function validateForm() {
     productDesc === "" ||
     productStatus === ""
   ) {
-    alert("Please insert all required inputs!");
+    alert("Please insert all details");
     return false;
-  }
+  } else return true;
 }
 
 function previewFileHandler(input, order) {
   const imgClassName = input.className;
-  console.log("input:", input);
 
-  const file = $(`.${imgClassName}`).get(0).files[0];
-  const fileType = file["type"];
-  const validImageaType = ["image/jpg", "image/jpeg", "image/png"];
+  const file = $(`.${imgClassName}`).get(0).files[0],
+    fileType = file["type"],
+    validImageType = ["image/jpg", "image/jpeg", "image/png"];
 
-  if (!validImageaType.includes(fileType)) {
-    alert("Please insert only jpg, jpeg and png!");
+  if (!validImageType.includes(fileType)) {
+    alert("Please insert only jpeg, jpg and png!");
   } else {
     if (file) {
       const reader = new FileReader();

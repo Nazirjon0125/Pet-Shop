@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import MemberService from "../models/Member.service";
+
 import { T } from "../libs/types/common";
-import { AdminRequest, LoginInput, MemberInput } from "../libs/types/member";
-import Errors, { HttpCode, Message } from "../libs/Errors";
+import MemberService from "../models/Member.service";
+import { AdminRequest, LoginInput, MemberInput } from "../libs/types/members";
 import { MemberType } from "../libs/enums/member.enum";
+import Errors, { HttpCode, Message } from "../libs/Errors";
 const memberService = new MemberService();
 
 const adminController: T = {};
@@ -47,7 +48,7 @@ adminController.processSignup = async (req: AdminRequest, res: Response) => {
       throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG);
 
     const newMember: MemberInput = req.body;
-    newMember.memberImage = file?.path.replace(/\\/g, "");
+    newMember.memberImages = file?.path.replace(/\\/g, "");
     newMember.memberType = MemberType.ADMIN;
     const result = await memberService.processSignup(newMember); // CALL
     // TODO: SESSIONS AUTHENTICATION

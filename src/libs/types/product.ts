@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose";
 import {
   ProductCollection,
   ProductSize,
-  ProductStatus,
+  ProductStatus
 } from "../enums/product.enum";
 
 export interface Product {
@@ -17,11 +17,9 @@ export interface Product {
   productDesc?: string;
   productImages: string[];
   productViews: number;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
-export interface ProductInquiry {
+export interface ProductInquery {
   order: string;
   page: number;
   limit: number;

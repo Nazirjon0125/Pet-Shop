@@ -4,11 +4,7 @@ import {
   ProductSize,
   ProductStatus,
   ProductVolume,
-  ProductYears,
 } from "../libs/enums/product.enum";
-
-//Cluster => DB => Collection => Document => DataSet
-// Validations: => 1. Frontend 2. DTO(almashinuv to'g'riligini tasdiqlash) 3. BAckend 4. Database
 
 const productSchema = new Schema(
   {
@@ -21,7 +17,7 @@ const productSchema = new Schema(
     productCollection: {
       type: String,
       enum: ProductCollection,
-      required: true,
+      require: true,
     },
 
     productName: {
@@ -45,12 +41,6 @@ const productSchema = new Schema(
       default: ProductSize.NORMAL,
     },
 
-    productYears: {
-      type: String,
-      enum: ProductYears,
-      default: ProductYears.MONTH,
-    },
-
     productVolume: {
       type: Number,
       enum: ProductVolume,
@@ -71,12 +61,13 @@ const productSchema = new Schema(
       default: 0,
     },
   },
-  { timestamps: true } //updatedAt, createdAt
-);
+
+  { timestamps: true }
+); // updatedAT, createdAT
 
 productSchema.index(
   { productName: 1, productSize: 1, productVolume: 1 },
   { unique: true }
 );
 
-export default mongoose.model("Product", productSchema); //ProductSchemaModel
+export default mongoose.model("Product", productSchema);

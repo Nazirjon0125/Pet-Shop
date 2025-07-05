@@ -1,113 +1,119 @@
 <%- include('includes/header') %>
 
 <link rel="stylesheet" type="text/css" href="/css/signup.css" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+/>
 
 <body>
-  <div class="signup-container">
+  <div class="signup-wrapper">
+    <a href="/admin" class="home-link">
+      <i class="fa-solid fa-house"></i> Go Home
+    </a>
+
     <form
       onsubmit="return validateSignupForm()"
       action="/admin/signup"
       method="POST"
       enctype="multipart/form-data"
+      class="signup-form"
     >
-      <div class="signup-frame" style="width: 650px">
-        <div class="signup-top">
-          <span>Signup</span>
-          <div>Go back <a href="/admin" style="color: #6440fb">Home</a></div>
-          <p>
-            Already signed up?
-            <a href="/admin/login" style="color: #6440fb">Login</a>
-          </p>
-        </div>
+      <h2>Admin Signup</h2>
 
-        <div class="sign-input-frame" style="justify-content: space-between">
-          <div class="sign-up-frame">
-            <label>Restaurant *</label>
-            <input
-              type="text"
-              name="memberNick"
-              class="member-nick"
-              placeholder="Username"
-              value=""
-            />
-          </div>
-          <div class="sign-up-frame">
-            <label>Phone *</label>
-            <input
-              type="text"
-              name="memberPhone"
-              class="member-phone"
-              placeholder="Phone"
-              value=""
-            />
-          </div>
-        </div>
-        <div class="sign-input-frame" style="justify-content: space-between">
-          <div class="sign-up-frame">
-            <label>Password *</label>
-            <input
-              type="password"
-              name="memberPassword"
-              class="member-password"
-              placeholder="Password"
-              value=""
-            />
-          </div>
-          <div class="sign-up-frame">
-            <label>Repeat password *</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              class="confirm-password"
-              placeholder="Repeat password"
-              value=""
-            />
-          </div>
-        </div>
+      <div class="input-group">
+        <input
+          type="text"
+          name="memberNick"
+          placeholder="Admin nick *"
+          required
+        />
+      </div>
 
-        <div class="signup-input-frame">
-          <div class="media-frame">
-            <img class="upload-img-frame" src="/img/default.jpeg" />
-            <div class="upload-container">
-              <span class="media-text">Product image</span>
-              <div
-                class="file-box bs3-primary preview-image"
-                style="margin-top: 25px; display: flex"
-              >
-                <input
-                  class="upload-name"
-                  value="Choose image"
-                  disabled="disabled"
-                />
-                <label for="input-file" class="file-input-label"
-                  >Upload Image</label
-                >
-                <input
-                  type="file"
-                  id="input-file"
-                  class="upload-hidden form-control-file member-image"
-                  name="memberImage"
-                />
-              </div>
-              <p class="thumbnail-desc">
-                Please upload restaurant image.<br />
-                Attention only:.jpg, .jpeg, or .png. <br />
-                formats allowed!
-              </p>
-            </div>
-          </div>
+      <div class="input-group">
+        <input type="text" name="memberPhone" placeholder="Phone *" required />
+      </div>
+
+      <div class="input-group password-group">
+        <input
+          type="password"
+          name="memberPassword"
+          placeholder="Password *"
+          required
+        />
+        <i class="fa-solid fa-eye toggle-pass"></i>
+      </div>
+
+      <div class="input-group password-group">
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Repeat password *"
+          required
+        />
+        <i class="fa-solid fa-eye toggle-pass"></i>
+      </div>
+
+      <div class="file-upload">
+        <label>Upload Image</label>
+        <input
+          type="file"
+          name="memberImage"
+          accept=".jpg,.jpeg,.png"
+          onchange="previewImage(event)"
+        />
+        <small>Only .jpg, .jpeg, .png allowed</small>
+        <div class="image-preview">
+          <img id="preview" src="/img/default.png" alt="Image preview" />
         </div>
+      </div>
 
-        <input name="memberType" value="RESTAURANT" hidden />
+      <input type="hidden" name="memberType" value="ADMIN" />
 
-        <button class="signup-btn btn" name="signup" type="submit">
-          Signup
+      <button type="submit" class="signup-btn">Sign Up</button>
+
+      <div class="social-buttons">
+        <button type="button" class="social-btn telegram">
+          <i class="fab fa-telegram-plane"></i> Telegram
+        </button>
+        <button type="button" class="social-btn google">
+          <i class="fab fa-google"></i> Google
+        </button>
+        <button type="button" class="social-btn kakao">
+          <i class="fas fa-comment"></i> KakaoTalk
         </button>
       </div>
+
+      <p class="alt-text">
+        Already registered? <a href="/admin/login">Login</a>
+      </p>
     </form>
   </div>
 
-  <script type="text/javascript" src="/js/signup.js"></script>
+  <script>
+    document.querySelectorAll(".toggle-pass").forEach((icon) => {
+      icon.addEventListener("click", () => {
+        const input = icon.previousElementSibling;
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      });
+    });
+
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        document.getElementById("preview").src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
 </body>
 
 <%- include('includes/footer') %>

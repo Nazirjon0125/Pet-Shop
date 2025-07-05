@@ -41,7 +41,7 @@ const memberSchema = new Schema(
       type: String,
     },
 
-    memberImage: {
+    memberImages: {
       type: String,
     },
 
@@ -50,7 +50,6 @@ const memberSchema = new Schema(
       default: 0,
     },
   },
-  { timestamps: true } //updatedAt, createdAt
-);
-
+  { timestamps: true }
+); // updatedAT, createdAT
 export default mongoose.model("Member", memberSchema);

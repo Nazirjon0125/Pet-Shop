@@ -1,15 +1,15 @@
 console.log("Users frontend javascript file");
+console.log("Users frontend javascript file");
 
 $(function () {
   $(".member-status").on("change", function (e) {
     const id = e.target.id,
       memberStatus = $(`#${id}.member-status`).val();
 
-    // REST API = maqsadli object
     axios
       .post("/admin/user/edit", {
         _id: id,
-        memberStatus: memberStatus,
+        memberStatus: memberStatus
       })
       .then((response) => {
         console.log("response;", response);

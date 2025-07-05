@@ -1,3 +1,4 @@
+// fish
 export enum ProductSize {
   SMALL = "SMALL",
   NORMAL = "NORMAL",
@@ -5,13 +6,14 @@ export enum ProductSize {
   SET = "SET",
 }
 
-export enum ProductYears {
-  WEEK = "ONE WEEK",
-  MONTH = "ONE MONTH",
-  YEAR = "ONE YEAR",
-  TWO_YEAR = "TWO YEAR",
-}
+// export enum ProductYears {
+//   WEEK = "ONE WEEK",
+//   MONTH = "ONE MONTH",
+//   YEAR = "ONE YEAR",
+//   TWO_YEAR = "TWO YEAR",
+// }
 
+// animals and birds
 export enum ProductVolume {
   HALF = 0.5,
   ONE = 1,
