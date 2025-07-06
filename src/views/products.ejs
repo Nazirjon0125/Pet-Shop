@@ -3,229 +3,307 @@
 <link rel="stylesheet" href="/css/products.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
-<body>
-  <div class="products-container">
+<div class="products-container">
 
-    <div class="navigation-menu">
-      <ul class="nav">
-        <li class="nav-item"><a href="/admin/">Home</a></li>
-        <li class="nav-item"><a href="/admin/product/all">Menu</a></li>
-        <li class="nav-item"><a href="/admin/user/all">Users</a></li>
-        <li class="nav-item" onclick="return confirm('Do you want to logout?')">
-          <a href="/admin/logout">Logout</a>
-        </li>
-      </ul>
-    </div>
+  <div class="navigation-menu">
+    <ul class="nav">
+      <li class="nav-item"><a href="/admin/">Home</a></li>
+      <li class="nav-item"><a href="/admin/product/all">Menu</a></li>
+      <li class="nav-item"><a href="/admin/user/all">Users</a></li>
+      <li class="nav-item" style="cursor: pointer;" onclick="return confirm('Do you want to logout?')">
+        <a href="/admin/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
 
-    <div class="restaurant-menu-frame">
-      <div class="board">
-        <div class="dishes-table">
-          <span class="new-dish-txt" style="margin-bottom: 30px">PRODUCT MENU</span>
+  <div class="admin-menu-frame">
+    <div class="board">
+      <div class="animals-table">
+        <span class="new-animal-txt" style="margin-bottom: 30px">PRODUCT MENU</span>
 
-          <table class="table table-bordered table-hover">
-            <thead class="thead-light">
+        <table class="table table-bordered table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>T/r</th>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Product Type</th>
+              <th>Product Size / Year</th>
+              <th>Product Price</th>
+              <th>Product Left Count</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <% products.forEach(function(value, key) { %>
+            <tbody style="background: white">
               <tr>
-                <th scope="col">T/r</th>
-                <th scope="col">Image</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Product Type</th>
-                <th scope="col">Product Size / Volume</th>
-                <th scope="col">Product Price</th>
-                <th scope="col">Product Left Count</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <% products.forEach(function(value, key) { %>
-              <tbody style="background: white">
-                <tr>
-                  <td><%= key + 1 %></td>
-                  <td>
-                    <% if (value.images && value.images.length > 0) { %>
-                      <img src="/uploads/<%= value.images[0] %>" alt="Product Image" class="table-img" />
-                    <% } else { %>
-                      <img src="/img/default.png" alt="Default Image" class="table-img" />
-                    <% } %>
-                  </td>
-                  <td><%= value.productName %></td>
-                  <td><%= value.productCollection %></td>
-                  <td><%= value.productCollection === 'FISH' ? value.productSize : value.productVolume %></td>
-                  <td>$<%= value.productPrice %></td>
-                  <td><%= value.productLeftCount %></td>
-                  <td>
-                    <select class="new-product-status" id="<%= value._id %>">
-                      <option value="PAUSE" <%= value.productStatus === 'PAUSE' ? 'selected' : '' %>>PAUSE</option>
-                      <option value="PROCESS" <%= value.productStatus === 'PROCESS' ? 'selected' : '' %>>PROCESS</option>
-                      <option value="DELETE" <%= value.productStatus === 'DELETE' ? 'selected' : '' %>>DELETE</option>
-                    </select>
-                  </td>
-                  <td>
-                    <!-- Edit button, for now just alert -->
-                    <button class="btn btn-warning edit-btn" data-id="<%= value._id %>">
-                      <i class="fas fa-pen"></i>
+                <td><%= key + 1 %></td>
+                <td>
+                  <% if (value.productImages && value.productImages.length > 0) { %>
+                    <img src="/<%= value.productImages[0] %>" alt="Product Image" class="table-img" />
+                  <% } else { %>
+                    <img src="/img/default.png" alt="Default Image" class="table-img" />
+                  <% } %>
+                </td>
+
+                <td><%= value.productName %></td>
+                <td><%= value.productCollection %></td>
+                <td><%= value.productCollection === 'FISH' ? value.productSize : value.productYear %></td>
+                <td>$<%= value.productPrice %></td>
+                <td><%= value.productLeftCount %></td>
+                <td>
+                  <select class="new-product-status" id="<%= value._id %>">
+                    <option value="PAUSE" <%= value.productStatus === 'PAUSE' ? 'selected' : '' %>>PAUSE</option>
+                    <option value="PROCESS" <%= value.productStatus === 'PROCESS' ? 'selected' : '' %>>PROCESS</option>
+                    <option value="DELETE" <%= value.productStatus === 'DELETE' ? 'selected' : '' %>>DELETE</option>
+                  </select>
+                </td>
+                <td>
+                  <button class="btn btn-warning edit-btn" data-id="<%= value._id %>">
+                    <i class="fas fa-pen"></i>
+                  </button>
+                  <form action="/admin/product/delete/<%= value._id %>" method="POST" 
+                        onsubmit="return confirm('Are you sure to delete this product?')" 
+                        style="display:inline-block;">
+                    <button type="submit" class="btn btn-danger delete-btn">
+                      <i class="fas fa-trash"></i>
                     </button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          <% }) %>
+        </table>
 
-                    <!-- Delete form -->
-                    <form action="/admin/product/delete/<%= value._id %>" method="POST" onsubmit="return confirm('Are you sure to delete this product?')" style="display:inline-block;">
-                      <button type="submit" class="btn btn-danger delete-btn">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </form>
-                  </td>
-                </tr>
-              </tbody>
-            <% }) %>
-          </table>
+        <div class="long-input" style="align-items: flex-end; margin-top: 25px;">
+          <button class="btn btn-primary" id="process-btn">New Product</button>
+        </div>
+      </div>
 
-          <div class="long-input" style="align-items: flex-end; margin-top: 25px;">
-            <button class="btn btn-primary" id="process-btn">New Product</button>
-          </div>
-
+      <!-- CREATE NEW PRODUCT FORM -->
+      <form
+        action="/admin/product/create"
+        method="POST"
+        enctype="multipart/form-data"
+        class="animal-container"
+        style="display:none"
+        onsubmit="return validateForm()"
+      >
+        <div class="long-input" style="display: flex; align-items: center;">
+          <span class="new-animal-txt">NEW PRODUCT DETAIL</span>
         </div>
 
-        <form
-          action="/admin/product/create"
-          method="POST"
-          enctype="multipart/form-data"
-          class="dish-container"
-          style="display:none"
-          onsubmit="return validateForm()"
-        >
-          <div class="long-input" style="display: flex; align-items: center;">
-            <span class="new-dish-txt">NEW PRODUCT DETAIL</span>
+        <div class="long-input">
+          <label>Product Name</label>
+          <input type="text" name="productName" class="product-name" required />
+        </div>
+
+        <input type="hidden" name="productStatus" value="PAUSE" />
+
+        <div class="half-input-frame">
+          <div class="half-input">
+            <label>Product Price</label>
+            <input type="number" name="productPrice" class="product-price" required />
+          </div>
+          <div class="half-input">
+            <label>Product Left Count</label>
+            <input type="number" name="productLeftCount" class="product-left-count" required />
+          </div>
+        </div>
+
+        <div class="half-input-frame">
+          <div class="half-input">
+            <label>Product Type</label>
+            <select name="productCollection" class="product-collection" required>
+              <option value="FISH">Fish</option>
+              <option value="DOG">Dog</option>
+              <option value="CAT">Cat</option>
+              <option value="PARROT">Parrot</option>
+              <option value="HAMSTER">Hamster</option>
+              <option value="TURTLE">Turtle</option>
+              <option value="OTHER">Other</option>
+            </select>
           </div>
 
-          <div class="long-input">
-            <label>Product Name</label>
-            <input type="text" name="productName" class="product-name" required />
+          <div class="half-input" id="product-collection">
+            <label>Fish Size</label>
+            <select name="productSize" class="product-size" required>
+              <option value="SMALL">Small</option>
+              <option value="NORMAL" selected>Normal</option>
+              <option value="LARGE">Large</option>
+            </select>
           </div>
 
-          <input type="hidden" name="productStatus" value="PAUSE" class="product-status" />
-
-          <div class="half-input-frame">
-            <div class="half-input">
-              <label>Product Price</label>
-              <input type="number" name="productPrice" class="product-price" required />
-            </div>
-            <div class="half-input">
-              <label>Product Left Count</label>
-              <input type="number" name="productLeftCount" class="product-left-count" required />
-            </div>
+          <div class="half-input" id="product-volume" style="display:none;">
+            <label>Animals Year</label>
+            <select name="productVolume" class="product-volume">
+              <option value="ONE_WEEK">ONE WEEK</option>
+              <option value="TWO_WEEK">TWO WEEK</option>
+              <option value="THREE_WEEK">THREE WEEK</option>
+              <option value="ONE_MONTH" selected>ONE MONTH</option>
+              <option value="TWO_MONTH">TWO MONTH</option>
+              <option value="THREE_MONTH">THREE MONTH</option>
+              <option value="FOUR_MONTH">FOUR MONTH</option>
+              <option value="FIVE_MONTH">FIVE MONTH</option>
+              <option value="SIX_MONTH">SIX MONTH</option>
+              <option value="SEVEN_MONTH">SEVEN MONTH</option>
+              <option value="EIGHT_MONTH">EIGHT MONTH</option>
+              <option value="NINE_MONTH">NINE MONTH</option>
+              <option value="ONE_YEAR">ONE YEAR</option>
+              <option value="TWO_YEAR">TWO YEAR</option>
+              <option value="THREE_YEAR">THREE YEAR</option>
+              <option value="ANY">ANY</option>
+            </select>
           </div>
+        </div>
 
-          <div class="half-input-frame">
-            <div class="half-input">
-              <label>Product Type</label>
-              <select name="productCollection" class="product-collection" required>
-                <option value="FISH">Fish</option>
-                <option value="ANIMALS">Animals</option>
-                <option value="BIRDS">Birds</option>
-                <option value="EATS">Eats</option>
-                <option value="OTHER">Other</option>
-              </select>
-            </div>
+        <div class="long-input">
+          <label>Product Description</label>
+          <textarea name="productDesc" class="product-desc" rows="5"></textarea>
+        </div>
 
-            <div class="half-input" id="product-collection">
-              <label>Fish Size</label>
-              <select name="productSize" class="product-size" required>
-                <option value="SMALL">Small</option>
-                <option value="NORMAL" selected>Normal</option>
-                <option value="LARGE">Large</option>
-                <option value="SET">Set</option>
-              </select>
-            </div>
-
-            <div class="half-input" id="product-volume" style="display:none;">
-              <label>Animals Volume (years)</label>
-              <select name="productVolume" class="product-volume">
-                <option value="0.5">0.5 year</option>
-                <option value="1" selected>1 year</option>
-                <option value="1.2">1.2 year</option>
-                <option value="1.5">1.5 year</option>
-                <option value="2">2 years</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="long-input">
-            <label>Product Description</label>
-            <textarea name="productDesc" class="product-desc" rows="5" required></textarea>
-          </div>
-
-          <div class="img-frame">
-            <label>Product Images</label>
-            <div class="media-frame">
+        <div class="img-frame">
+          <label>Product Images</label>
+          <div class="media-frame">
+            <% for(let i = 1; i <= 5; i++) { %>
               <div class="upload-img-box">
-                <img src="/img/upload.svg" id="image-section-1" />
-                <input
-                  type="file"
-                  id="file1"
-                  name="productImages"
-                  class="image-one"
-                  required
-                  onchange="previewFileHandler(this, 1)"
-                  accept="image/*"
-                />
+                <img src="/img/upload.svg" class="image-preview" />
+                <input 
+                type="file" 
+                name="productImages" 
+                class="image-file" 
+                onchange="previewFileHandler(this)" 
+                accept="image/*" />
               </div>
-              <div class="upload-img-box">
-                <img src="/img/upload.svg" id="image-section-2" />
-                <input
-                  type="file"
-                  id="file2"
-                  name="productImages"
-                  class="image-two"
-                  onchange="previewFileHandler(this, 2)"
-                  accept="image/*"
-                />
-              </div>
-              <div class="upload-img-box">
-                <img src="/img/upload.svg" id="image-section-3" />
-                <input
-                  type="file"
-                  id="file3"
-                  name="productImages"
-                  class="image-three"
-                  onchange="previewFileHandler(this, 3)"
-                  accept="image/*"
-                />
-              </div>
-              <div class="upload-img-box">
-                <img src="/img/upload.svg" id="image-section-4" />
-                <input
-                  type="file"
-                  id="file4"
-                  name="productImages"
-                  class="image-four"
-                  onchange="previewFileHandler(this, 4)"
-                  accept="image/*"
-                />
-              </div>
-              <div class="upload-img-box">
-                <img src="/img/upload.svg" id="image-section-5" />
-                <input
-                  type="file"
-                  id="file5"
-                  name="productImages"
-                  class="image-five"
-                  onchange="previewFileHandler(this, 5)"
-                  accept="image/*"
-                />
-              </div>
-            </div>
-          </div>
 
-          <div class="operation-buttons">
-            <button class="btn btn-danger" id="cancel-btn" type="button">Cancel</button>
-            <button type="submit" class="btn btn-primary" id="create-btn">Create</button>
+
+            <% } %>
           </div>
-        </form>
-      </div>
+        </div>
+
+        <div class="operation-buttons">
+          <button class="btn btn-danger" id="cancel-btn" type="button">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="create-btn">Create</button>
+        </div>
+      </form>
+  
+      <!-- UPDATE PRODUCT FORM -->
+
+      <form
+  action=""
+  method="POST"
+  enctype="multipart/form-data"
+  class="animal-container update-container"
+  style="display:none"
+  onsubmit="return validateUpdateForm()"
+  id="updateForm"
+>
+  <div class="long-input" style="display: flex; align-items: center;">
+    <span class="new-animal-txt">UPDATE PRODUCT DETAIL</span>
+  </div>
+
+  <input type="hidden" name="id" id="update-id" />
+
+  <div class="long-input">
+    <label>Product Name</label>
+    <input type="text" name="productName" id="update-productName" class="product-name" required />
+  </div>
+
+  <input type="hidden" name="productStatus" value="PAUSE" />
+
+  <div class="half-input-frame">
+    <div class="half-input">
+      <label>Product Price</label>
+      <input type="number" name="productPrice" id="update-productPrice" class="product-price" required />
+    </div>
+    <div class="half-input">
+      <label>Product Left Count</label>
+      <input type="number" name="productLeftCount" id="update-productLeftCount" class="product-left-count" required />
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="/js/products.js"></script>
-</body>
+  <div class="half-input-frame">
+    <div class="half-input">
+      <label>Product Type</label>
+      <select name="productCollection" id="update-productCollection" class="product-collection" required>
+        <option value="FISH">Fish</option>
+        <option value="DOG">Dog</option>
+        <option value="CAT">Cat</option>
+        <option value="PARROT">Parrot</option>
+        <option value="HAMSTER">Hamster</option>
+        <option value="TURTLE">Turtle</option>
+        <option value="OTHER">Other</option>
+      </select>
+    </div>
 
-<%- include('includes/footer') %> 
+    <div class="half-input" id="update-product-collection">
+      <label>Fish Size</label>
+      <select name="productSize" id="update-productSize" class="product-size" required>
+        <option value="SMALL">Small</option>
+        <option value="NORMAL" selected>Normal</option>
+        <option value="LARGE">Large</option>
+      </select>
+    </div>
+
+    <div class="half-input" id="update-product-volume" style="display:none;">
+      <label>Animals Year</label>
+      <select name="productVolume" id="update-productVolume" class="product-volume">
+        <option value="ONE_WEEK">ONE WEEK</option>
+        <option value="TWO_WEEK">TWO WEEK</option>
+        <option value="THREE_WEEK">THREE WEEK</option>
+        <option value="ONE_MONTH" selected>ONE MONTH</option>
+        <option value="TWO_MONTH">TWO MONTH</option>
+        <option value="THREE_MONTH">THREE MONTH</option>
+        <option value="FOUR_MONTH">FOUR MONTH</option>
+        <option value="FIVE_MONTH">FIVE MONTH</option>
+        <option value="SIX_MONTH">SIX MONTH</option>
+        <option value="SEVEN_MONTH">SEVEN MONTH</option>
+        <option value="EIGHT_MONTH">EIGHT MONTH</option>
+        <option value="NINE_MONTH">NINE MONTH</option>
+        <option value="ONE_YEAR">ONE YEAR</option>
+        <option value="TWO_YEAR">TWO YEAR</option>
+        <option value="THREE_YEAR">THREE YEAR</option>
+        <option value="ANY">ANY</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="long-input">
+    <label>Product Description</label>
+    <textarea name="productDesc" id="update-productDesc" class="product-desc" rows="5" required></textarea>
+  </div>
+
+  <div class="img-frame">
+    <label>Product Images</label>
+    <div class="media-frame">
+      <% for(let i = 1; i <= 5; i++) { %>
+        <div class="upload-img-box">
+          <img src="/img/upload.svg" class="image-preview" />
+          <input 
+            type="file" 
+            name="productImages" 
+            class="image-file" 
+            onchange="previewFileHandler(this)" 
+            accept="image/*" 
+          />
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="operation-buttons">
+    <button class="btn btn-danger" id="update-cancel-btn" type="button">Cancel</button>
+    <button type="submit" class="btn btn-primary" id="update-btn">Update</button>
+  </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/products.js"></script>
+
+<%- include('includes/footer') %>

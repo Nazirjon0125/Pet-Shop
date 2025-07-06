@@ -87,6 +87,8 @@ productController.createNewProduct = async (
     data.productImages = req.files?.map((ele) => {
       return ele.path.replace(/\\/g, "/");
     });
+
+    console.log("rasm", data);
     await productService.createNewProduct(data);
     console.log("productCollection:", data.productCollection);
     res.send(
@@ -102,16 +104,54 @@ productController.createNewProduct = async (
   }
 };
 
+// Productni id bo‘yicha olish uchun controller
+// productController.getProductById = async (req: Request, res: Response) => {
+//   try {
+//     const id = req.params.id;
+//     const product = await productService.getUpdateProduct(id); // productService ichida funksiya bo‘lishi kerak
+//     if (!product) {
+//       return res.status(404).json({ message: "Product not found" });
+//     }
+//     res.status(200).json({ data: product });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
+
 productController.updateChosenProduct = async (req: Request, res: Response) => {
   try {
     console.log("updateChosenproduct");
     const id = req.params.id;
+    const input = req.body;
+
+    if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+      // fayl nomlarini input.images ga joylaymiz
+      input.images = req.files.map(
+        (file: Express.Multer.File) => file.filename
+      );
+    }
+
     const result = await productService.updateChosenProduct(id, req.body);
     res.status(HttpCode.OK).json({ data: result });
   } catch (err) {
     console.log("Error, updateChosenproduct", err);
     if (err instanceof Errors) res.status(err.code).json(err);
     else res.status(Errors.standard.code).json(Errors.standard);
+  }
+};
+
+productController.deleteChosenProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+
+    const deletedProduct = await productService.deleteChosenProduct(id);
+    console.log("deletedProduct=>", deletedProduct);
+
+    return res.redirect("/admin/product/all"); // faqat redirect
+  } catch (err) {
+    console.log("Error, deleteChosenProduct", err);
+    return res.redirect("/admin/product/all?error=Could not delete");
   }
 };
 

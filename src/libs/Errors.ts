@@ -6,10 +6,11 @@ export enum HttpCode {
   UNAUTHORIZED = 401,
   FORBIDDEN = 403,
   NOT_FOUND = 404,
-  INTERNAL_SERVICE_ERROR = 500
+  INTERNAL_SERVICE_ERROR = 500,
 }
 
 export enum Message {
+  DELETE_FAILED = "Delete failed",
   SOMETHING_WENT_WRONG = "Something went wrong!",
   NO_DATA_FOUND = "No data found",
   CREATE_FAILED = "Create failed",
@@ -20,7 +21,7 @@ export enum Message {
   TOKEN_CREATION_FAILED = "Token creation error",
   BLOCKED_USER = "You have been blocked, please contact the restaurant!",
   WRONG_PASSWORD = "Wrong password entered. Please try again!",
-  NOT_AUTHENTICATED = "You are not authenticated. Please log in first!"
+  NOT_AUTHENTICATED = "You are not authenticated. Please log in first!",
 }
 
 export class Errors extends Error {
@@ -29,7 +30,7 @@ export class Errors extends Error {
 
   static standard = {
     code: HttpCode.INTERNAL_SERVICE_ERROR,
-    message: Message.SOMETHING_WENT_WRONG
+    message: Message.SOMETHING_WENT_WRONG,
   };
 
   constructor(statusCode: HttpCode, statusMessage: Message) {

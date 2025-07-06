@@ -11,7 +11,7 @@ function getTargetImageStorage(address: any) {
       const extension = path.parse(file.originalname).ext;
       const random_name = v4() + extension;
       cb(null, random_name);
-    }
+    },
   });
 }
 

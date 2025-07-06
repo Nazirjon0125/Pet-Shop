@@ -1,6 +1,10 @@
 <%- include('includes/header') %>
 
-<link rel="stylesheet" type="text/css" href="/css/login.css" />
+<link rel="stylesheet" href="/css/login.css" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+/>
 
 <body>
   <form class="login-container" action="/admin/login" method="POST">
@@ -18,10 +22,10 @@
           name="memberNick"
           class="member-nick"
           placeholder="Admin name"
-          value=""
           required
         />
       </div>
+
       <div class="login-input-container">
         <label>Password *</label>
         <input
@@ -29,9 +33,9 @@
           name="memberPassword"
           class="member-password"
           placeholder="Password"
-          value=""
           required
         />
+        <i class="fa-solid fa-eye toggle-pass"></i>
       </div>
     </div>
 
@@ -49,6 +53,29 @@
       </button>
     </div>
   </form>
+
+  <script>
+    document.querySelectorAll(".toggle-pass").forEach((icon) => {
+      icon.style.cursor = "pointer";
+      icon.style.position = "absolute";
+      icon.style.right = "15px";
+      icon.style.top = "43px";
+      icon.style.color = "#f0c040";
+
+      icon.addEventListener("click", () => {
+        const input = icon.previousElementSibling;
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      });
+    });
+  </script>
 </body>
 
 <%- include('includes/footer') %>

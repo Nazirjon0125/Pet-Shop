@@ -14,6 +14,7 @@ import { ObjectId } from "mongoose";
 import { ViewService } from "./View.servic";
 import { ViewInput } from "../libs/types/view";
 import { ViewGroup } from "../libs/enums/view.enum";
+import { Types } from "mongoose";
 class ProductService {
   private readonly productModel;
   public viewService;
@@ -108,6 +109,11 @@ class ProductService {
     }
   }
 
+  // public async getUpdateProduct(id: string): Promise<Product> {
+  //   id = shapeIntoMongooseObjectId(id);
+  //   return await this.productModel.findById(id).exec();
+  // }
+
   public async updateChosenProduct(
     id: string,
     input: ProductUpdateInput
@@ -117,6 +123,16 @@ class ProductService {
       .findOneAndUpdate({ _id: id }, input, { new: true })
       .exec();
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.UPDATED_FAILED);
+    return result;
+  }
+
+  public async deleteChosenProduct(id: string): Promise<Product> {
+    if (!Types.ObjectId.isValid(id))
+      throw new Errors(HttpCode.BAD_REQUEST, Message.NO_DATA_FOUND);
+
+    const result = await this.productModel.findByIdAndDelete(id).exec();
+    if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.DELETE_FAILED);
+    console.log("deleteChosenProduct=>", result);
     return result;
   }
 }

@@ -77,15 +77,14 @@ adminController.processLogin = async (req: AdminRequest, res: Response) => {
 
     req.session.member = result;
     req.session.save(function () {
-      res.redirect("/admin/product/all");
+      res.redirect("/admin");
     });
   } catch (err) {
     console.log("Error procssesLogin", err);
     const message =
       err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
-    res.send(
-      `Hi <script>alert(" ${message}"); window .location.replace('/admin/login')</script>`
-    );
+    res.send(`<script>alert("${message}"); window.location.href = "/admin/login";</script>
+`);
   }
 };
 

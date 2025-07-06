@@ -38,10 +38,23 @@ routerAdmin.post(
   productController.createNewProduct
 );
 
+// routerAdmin.get(
+//   "/product/:id",
+//   adminController.verifyAdmin,
+//   productController.getProductById
+// );
+
 routerAdmin.post(
   "/product/:id",
   adminController.verifyAdmin,
+  makeUploader("products").array("productImages", 5), // Multer middleware
   productController.updateChosenProduct
+);
+
+routerAdmin.post(
+  "/product/delete/:id",
+  adminController.verifyAdmin,
+  productController.deleteChosenProduct
 );
 
 /** User */

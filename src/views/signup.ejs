@@ -1,10 +1,6 @@
 <%- include('includes/header') %>
 
 <link rel="stylesheet" type="text/css" href="/css/signup.css" />
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-/>
 
 <body>
   <div class="signup-wrapper">
@@ -13,7 +9,7 @@
     </a>
 
     <form
-      onsubmit="return validateSignupForm()"
+      id="signupForm"
       action="/admin/signup"
       method="POST"
       enctype="multipart/form-data"
@@ -25,19 +21,27 @@
         <input
           type="text"
           name="memberNick"
+          class="member-nick"
           placeholder="Admin nick *"
           required
         />
       </div>
 
       <div class="input-group">
-        <input type="text" name="memberPhone" placeholder="Phone *" required />
+        <input
+          type="text"
+          name="memberPhone"
+          class="member-phone"
+          placeholder="Phone *"
+          required
+        />
       </div>
 
       <div class="input-group password-group">
         <input
           type="password"
           name="memberPassword"
+          class="member-password"
           placeholder="Password *"
           required
         />
@@ -48,6 +52,7 @@
         <input
           type="password"
           name="confirmPassword"
+          class="confirm-password"
           placeholder="Repeat password *"
           required
         />
@@ -59,12 +64,19 @@
         <input
           type="file"
           name="memberImage"
+          class="member-image"
           accept=".jpg,.jpeg,.png"
-          onchange="previewImage(event)"
+          id="memberImageInput"
+          required
         />
         <small>Only .jpg, .jpeg, .png allowed</small>
         <div class="image-preview">
-          <img id="preview" src="/img/default.png" alt="Image preview" />
+          <img
+            class="upload-img-frame"
+            id="preview"
+            src="/img/default.png"
+            alt="Image preview"
+          />
         </div>
       </div>
 
@@ -90,30 +102,7 @@
     </form>
   </div>
 
-  <script>
-    document.querySelectorAll(".toggle-pass").forEach((icon) => {
-      icon.addEventListener("click", () => {
-        const input = icon.previousElementSibling;
-        if (input.type === "password") {
-          input.type = "text";
-          icon.classList.remove("fa-eye");
-          icon.classList.add("fa-eye-slash");
-        } else {
-          input.type = "password";
-          icon.classList.remove("fa-eye-slash");
-          icon.classList.add("fa-eye");
-        }
-      });
-    });
-
-    function previewImage(event) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        document.getElementById("preview").src = reader.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  </script>
+  <script src="/js/signup.js"></script>
 </body>
 
 <%- include('includes/footer') %>

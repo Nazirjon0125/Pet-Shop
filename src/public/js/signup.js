@@ -1,34 +1,44 @@
 console.log("Signup frontend javascript file");
-$(function () {
-  const fileTarget = $(".file-box .upload-hidden");
-  let filename;
 
-  fileTarget.on("change", function () {
-    if (window.FileReader) {
-      const uploadFile = $(this)[0].files[0];
-      const fileType = uploadFile["type"];
-      const validImageType = ["image/jpg", "image/jpeg", "image/png"];
-      if (!validImageType.includes(fileType)) {
-        alert("Please insert only jpeg, jpg and png!");
-      } else {
-        if (uploadFile) {
-          console.log(URL.createObjectURL(uploadFile));
-          $(".upload-img-frame")
-            .attr("src", URL.createObjectURL(uploadFile))
-            .addClass("success");
-          filename = $(this)[0].files[0].name;
-        }
-      }
+// Toggle password visibility
+document.querySelectorAll(".toggle-pass").forEach((icon) => {
+  icon.addEventListener("click", () => {
+    const input = icon.previousElementSibling;
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
     }
-    $(this).siblings(".upload-name").val(filename);
   });
 });
 
-function validateSignupForm() {
-  const memberNick = $(".member-nick").val();
-  const memberPhone = $(".member-phone").val();
-  const memberPassword = $(".member-password").val();
-  const confirmPassword = $(".confirm-password").val();
+// Image preview
+document
+  .getElementById("memberImageInput")
+  .addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    const validTypes = ["image/jpg", "image/jpeg", "image/png"];
+    if (!validTypes.includes(file.type)) {
+      alert("Only JPG, JPEG, PNG files are allowed!");
+      event.target.value = "";
+      document.getElementById("preview").src = "/img/default.png";
+      return;
+    }
+    document.getElementById("preview").src = URL.createObjectURL(file);
+  });
+
+// Form validation on submit
+document.getElementById("signupForm").addEventListener("submit", (e) => {
+  const memberNick = document.querySelector(".member-nick").value.trim();
+  const memberPhone = document.querySelector(".member-phone").value.trim();
+  const memberPassword = document.querySelector(".member-password").value;
+  const confirmPassword = document.querySelector(".confirm-password").value;
+  const memberImageInput = document.querySelector(".member-image");
 
   if (
     memberNick === "" ||
@@ -37,18 +47,19 @@ function validateSignupForm() {
     confirmPassword === ""
   ) {
     alert("Please insert all required inputs!");
+    e.preventDefault();
     return false;
   }
 
   if (memberPassword !== confirmPassword) {
     alert("Password differs, please check!");
+    e.preventDefault();
     return false;
   }
-  const memberImage = ".member-image".get(0).files[0].name
-    ? $(".member-image").get(0).files[0].name
-    : null;
-  if (!memberImage) {
-    alert("Please insert rtestaurant image!");
+
+  if (!memberImageInput.files.length) {
+    alert("Please insert restaurant image!");
+    e.preventDefault();
     return false;
   }
-}
+});

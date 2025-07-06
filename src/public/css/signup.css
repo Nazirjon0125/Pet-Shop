@@ -9,9 +9,8 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-/* Form container */
 .signup-wrapper {
-  background: rgba(0, 0, 0, 0.5); /* yarim shaffof qora */
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 25px;
   padding: 50px 40px;
   width: 100%;
@@ -35,11 +34,7 @@ body {
 .home-link:hover {
   color: #fbb034;
 }
-.home-link i {
-  font-size: 1.1rem;
-}
 
-/* Title */
 .signup-form h2 {
   text-align: center;
   margin-bottom: 35px;
@@ -47,12 +42,10 @@ body {
   color: #fbb034;
 }
 
-/* Input group */
 .input-group {
   position: relative;
   margin-bottom: 25px;
 }
-
 .input-group input[type="text"],
 .input-group input[type="password"],
 .input-group input[type="file"] {
@@ -66,16 +59,13 @@ body {
   outline: none;
   transition: border-color 0.3s;
 }
-
 .input-group input:focus {
   border-bottom: 2px solid #fbb034;
 }
-
 .input-group input::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Password eye icon */
 .password-group i.toggle-pass {
   position: absolute;
   right: 10px;
@@ -89,7 +79,6 @@ body {
   color: #fbb034;
 }
 
-/* File upload */
 .file-upload {
   margin-bottom: 25px;
 }
@@ -111,7 +100,6 @@ body {
   border: 2px solid #fbb034;
 }
 
-/* Signup button */
 .signup-btn {
   width: 100%;
   padding: 14px;
@@ -130,7 +118,6 @@ body {
   box-shadow: 0 8px 25px rgba(251, 176, 52, 0.8);
 }
 
-/* Social buttons */
 .social-buttons {
   margin-top: 28px;
   display: flex;
@@ -151,8 +138,6 @@ body {
   border: 2px solid transparent;
   transition: all 0.3s;
 }
-
-/* Social specifics */
 .telegram {
   color: #0088cc;
   border-color: #0088cc;
@@ -178,7 +163,6 @@ body {
   color: #3c1e1e;
 }
 
-/* Bottom text */
 .alt-text {
   margin-top: 22px;
   text-align: center;

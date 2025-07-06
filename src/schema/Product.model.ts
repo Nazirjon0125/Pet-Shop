@@ -3,7 +3,7 @@ import {
   ProductCollection,
   ProductSize,
   ProductStatus,
-  ProductVolume,
+  ProductYear,
 } from "../libs/enums/product.enum";
 
 const productSchema = new Schema(
@@ -41,10 +41,10 @@ const productSchema = new Schema(
       default: ProductSize.NORMAL,
     },
 
-    productVolume: {
-      type: Number,
-      enum: ProductVolume,
-      default: ProductVolume.ONE,
+    productYear: {
+      type: String,
+      enum: ProductYear,
+      default: ProductYear.ONE_MONTH,
     },
 
     productDesc: {
@@ -66,7 +66,7 @@ const productSchema = new Schema(
 ); // updatedAT, createdAT
 
 productSchema.index(
-  { productName: 1, productSize: 1, productVolume: 1 },
+  { productName: 1, productSize: 1, productYear: 1 },
   { unique: true }
 );
 
