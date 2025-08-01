@@ -38,12 +38,6 @@ routerAdmin.post(
   productController.createNewProduct
 );
 
-// routerAdmin.get(
-//   "/product/:id",
-//   adminController.verifyAdmin,
-//   productController.getProductById
-// );
-
 routerAdmin.post(
   "/product/:id",
   adminController.verifyAdmin,

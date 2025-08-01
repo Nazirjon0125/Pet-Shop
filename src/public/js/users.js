@@ -1,5 +1,4 @@
 console.log("Users frontend javascript file");
-console.log("Users frontend javascript file");
 
 $(function () {
   $(".member-status").on("change", function (e) {
@@ -9,7 +8,7 @@ $(function () {
     axios
       .post("/admin/user/edit", {
         _id: id,
-        memberStatus: memberStatus
+        memberStatus: memberStatus,
       })
       .then((response) => {
         console.log("response;", response);

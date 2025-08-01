@@ -104,21 +104,6 @@ productController.createNewProduct = async (
   }
 };
 
-// Productni id bo‘yicha olish uchun controller
-// productController.getProductById = async (req: Request, res: Response) => {
-//   try {
-//     const id = req.params.id;
-//     const product = await productService.getUpdateProduct(id); // productService ichida funksiya bo‘lishi kerak
-//     if (!product) {
-//       return res.status(404).json({ message: "Product not found" });
-//     }
-//     res.status(200).json({ data: product });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
-
 productController.updateChosenProduct = async (req: Request, res: Response) => {
   try {
     console.log("updateChosenproduct");

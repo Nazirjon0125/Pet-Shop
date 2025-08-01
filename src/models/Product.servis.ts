@@ -1,4 +1,3 @@
-import { ProductCollection } from "../libs/enums/product.enum";
 import { T } from "../libs/types/common";
 import { shapeIntoMongooseObjectId } from "../libs/config";
 import Errors, { HttpCode, Message } from "../libs/Errors";
@@ -108,11 +107,6 @@ class ProductService {
       throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
     }
   }
-
-  // public async getUpdateProduct(id: string): Promise<Product> {
-  //   id = shapeIntoMongooseObjectId(id);
-  //   return await this.productModel.findById(id).exec();
-  // }
 
   public async updateChosenProduct(
     id: string,

@@ -19,7 +19,7 @@
   <div class="admin-menu-frame">
     <div class="board">
       <div class="animals-table">
-        <span class="new-animal-txt" style="margin-bottom: 30px">PRODUCT MENU</span>
+        <span class="new-animal-txt" style="margin-bottom: 30px">PET SHOP MENU</span>
 
         <table class="table table-bordered table-hover">
           <thead class="thead-light">
@@ -89,9 +89,10 @@
         class="animal-container"
         style="display:none"
         onsubmit="return validateForm()"
+        id="newProductForm"
       >
         <div class="long-input" style="display: flex; align-items: center;">
-          <span class="new-animal-txt">NEW PRODUCT DETAIL</span>
+          <span class="new-animal-txt">NEW PETS DETAIL</span>
         </div>
 
         <div class="long-input">
@@ -191,119 +192,121 @@
       <!-- UPDATE PRODUCT FORM -->
 
       <form
-  action=""
-  method="POST"
-  enctype="multipart/form-data"
-  class="animal-container update-container"
-  style="display:none"
-  onsubmit="return validateUpdateForm()"
-  id="updateForm"
->
-  <div class="long-input" style="display: flex; align-items: center;">
-    <span class="new-animal-txt">UPDATE PRODUCT DETAIL</span>
-  </div>
-
-  <input type="hidden" name="id" id="update-id" />
-
-  <div class="long-input">
-    <label>Product Name</label>
-    <input type="text" name="productName" id="update-productName" class="product-name" required />
-  </div>
-
-  <input type="hidden" name="productStatus" value="PAUSE" />
-
-  <div class="half-input-frame">
-    <div class="half-input">
-      <label>Product Price</label>
-      <input type="number" name="productPrice" id="update-productPrice" class="product-price" required />
-    </div>
-    <div class="half-input">
-      <label>Product Left Count</label>
-      <input type="number" name="productLeftCount" id="update-productLeftCount" class="product-left-count" required />
-    </div>
-  </div>
-
-  <div class="half-input-frame">
-    <div class="half-input">
-      <label>Product Type</label>
-      <select name="productCollection" id="update-productCollection" class="product-collection" required>
-        <option value="FISH">Fish</option>
-        <option value="DOG">Dog</option>
-        <option value="CAT">Cat</option>
-        <option value="PARROT">Parrot</option>
-        <option value="HAMSTER">Hamster</option>
-        <option value="TURTLE">Turtle</option>
-        <option value="OTHER">Other</option>
-      </select>
-    </div>
-
-    <div class="half-input" id="update-product-collection">
-      <label>Fish Size</label>
-      <select name="productSize" id="update-productSize" class="product-size" required>
-        <option value="SMALL">Small</option>
-        <option value="NORMAL" selected>Normal</option>
-        <option value="LARGE">Large</option>
-      </select>
-    </div>
-
-    <div class="half-input" id="update-product-volume" style="display:none;">
-      <label>Animals Year</label>
-      <select name="productVolume" id="update-productVolume" class="product-volume">
-        <option value="ONE_WEEK">ONE WEEK</option>
-        <option value="TWO_WEEK">TWO WEEK</option>
-        <option value="THREE_WEEK">THREE WEEK</option>
-        <option value="ONE_MONTH" selected>ONE MONTH</option>
-        <option value="TWO_MONTH">TWO MONTH</option>
-        <option value="THREE_MONTH">THREE MONTH</option>
-        <option value="FOUR_MONTH">FOUR MONTH</option>
-        <option value="FIVE_MONTH">FIVE MONTH</option>
-        <option value="SIX_MONTH">SIX MONTH</option>
-        <option value="SEVEN_MONTH">SEVEN MONTH</option>
-        <option value="EIGHT_MONTH">EIGHT MONTH</option>
-        <option value="NINE_MONTH">NINE MONTH</option>
-        <option value="ONE_YEAR">ONE YEAR</option>
-        <option value="TWO_YEAR">TWO YEAR</option>
-        <option value="THREE_YEAR">THREE YEAR</option>
-        <option value="ANY">ANY</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="long-input">
-    <label>Product Description</label>
-    <textarea name="productDesc" id="update-productDesc" class="product-desc" rows="5" required></textarea>
-  </div>
-
-  <div class="img-frame">
-    <label>Product Images</label>
-    <div class="media-frame">
-      <% for(let i = 1; i <= 5; i++) { %>
-        <div class="upload-img-box">
-          <img src="/img/upload.svg" class="image-preview" />
-          <input 
-            type="file" 
-            name="productImages" 
-            class="image-file" 
-            onchange="previewFileHandler(this)" 
-            accept="image/*" 
-          />
+        action=""
+        method="POST"
+        enctype="multipart/form-data"
+        class=" update-container"
+        style="display:none"
+        onsubmit="return validateUpdateForm()"
+        id="updateForm"
+        id="updateProductForm"
+      >
+        <div class="long-input" style="display: flex; align-items: center;">
+          <span class="new-animal-txt">UPDATE PRODUCT DETAIL</span>
         </div>
-      <% } %>
-    </div>
-  </div>
 
-  <div class="operation-buttons">
-    <button class="btn btn-danger" id="update-cancel-btn" type="button">Cancel</button>
-    <button type="submit" class="btn btn-primary" id="update-btn">Update</button>
-  </div>
-      </form>
+        <input type="hidden" name="id" id="update-id" />
 
-    </div>
-  </div>
-</div>
+        <div class="long-input">
+          <label>Product Name</label>
+          <input type="text" name="productName" id="update-productName" class="product-name" required />
+        </div>
+
+        <input type="hidden" name="productStatus" value="PAUSE" />
+
+        <div class="half-input-frame">
+          <div class="half-input">
+            <label>Product Price</label>
+            <input type="number" name="productPrice" id="update-productPrice" class="product-price" required />
+          </div>
+          <div class="half-input">
+            <label>Product Left Count</label>
+            <input type="number" name="productLeftCount" id="update-productLeftCount" class="product-left-count" required />
+          </div>
+        </div>
+
+        <div class="half-input-frame">
+          <div class="half-input">
+            <label>Product Type</label>
+            <select name="productCollection" id="update-productCollection" class="product-collection" required>
+              <option value="FISH">Fish</option>
+              <option value="DOG">Dog</option>
+              <option value="CAT">Cat</option>
+              <option value="PARROT">Parrot</option>
+              <option value="HAMSTER">Hamster</option>
+              <option value="TURTLE">Turtle</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+
+          <div class="half-input" id="update-product-collection">
+            <label>Fish Size</label>
+            <select name="productSize" id="update-productSize" class="product-size" required>
+              <option value="SMALL">Small</option>
+              <option value="NORMAL" selected>Normal</option>
+              <option value="LARGE">Large</option>
+            </select>
+          </div>
+
+          <div class="half-input" id="update-product-volume" style="display:none;">
+            <label>Animals Year</label>
+            <select name="productVolume" id="update-productVolume" class="product-volume">
+              <option value="ONE_WEEK">ONE WEEK</option>
+              <option value="TWO_WEEK">TWO WEEK</option>
+              <option value="THREE_WEEK">THREE WEEK</option>
+              <option value="ONE_MONTH" selected>ONE MONTH</option>
+              <option value="TWO_MONTH">TWO MONTH</option>
+              <option value="THREE_MONTH">THREE MONTH</option>
+              <option value="FOUR_MONTH">FOUR MONTH</option>
+              <option value="FIVE_MONTH">FIVE MONTH</option>
+              <option value="SIX_MONTH">SIX MONTH</option>
+              <option value="SEVEN_MONTH">SEVEN MONTH</option>
+              <option value="EIGHT_MONTH">EIGHT MONTH</option>
+              <option value="NINE_MONTH">NINE MONTH</option>
+              <option value="ONE_YEAR">ONE YEAR</option>
+              <option value="TWO_YEAR">TWO YEAR</option>
+              <option value="THREE_YEAR">THREE YEAR</option>
+              <option value="ANY">ANY</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="long-input">
+          <label>Product Description</label>
+          <textarea name="productDesc" id="update-productDesc" class="product-desc" rows="5" required></textarea>
+        </div>
+
+        <div class="img-frame">
+          <label>Product Images</label>
+          <div class="media-frame">
+            <% for(let i = 1; i <= 5; i++) { %>
+              <div class="upload-img-box">
+                <img src="/img/upload.svg" class="image-preview" />
+                <input 
+                  type="file" 
+                  name="productImages" 
+                  class="image-file" 
+                  onchange="previewFileHandler(this)" 
+                  accept="image/*" 
+                />
+              </div>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="operation-buttons">
+          <button class="btn btn-danger" id="update-cancel-btn" type="button">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="update-btn">Update</button>
+        </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/products.js"></script>
 
 <%- include('includes/footer') %>
+

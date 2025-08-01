@@ -9,6 +9,7 @@ import {
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import * as bcrypt from "bcryptjs";
 import { shapeIntoMongooseObjectId } from "../libs/config";
+import { Types } from "mongoose";
 
 class MemberService {
   private readonly memberModel;

@@ -55,22 +55,27 @@
             <thead class="thead-light">
               <tr class="thead-light">
                 <th scope="col">No</th>
+                 <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Phone</th>
+                <th scope="col">Orders</th>
                 <th scope="col">Status</th>
               </tr>
             </thead>
             <!--  LOOP PRODUCTS: START  -->
             <% users.map(function(value, key) { %>
-            <tbody style="background: white">
+            <tbody style="background: rgb(250, 246, 246)">
               <td><%= key + 1 %></td>
+              <td><%= value.memberImage %></td>
               <td><%= value.memberNick %></td>
               <td><%= value.memberPhone %></td>
+              <td><%= value.memberOrders %></td>
+              
               <td style="width: 13%">
                 <select class="spec-select member-status" id="<%= value._id %>">
                   <option value="PAUSE" <%= value.memberStatus === 'PAUSE' ? 'selected' : '' %>>ACTIVE</option>
-                      <option value="PROCESS" <%= value.memberStatus === 'PROCESS' ? 'selected' : '' %>>BLOCK</option>
-                      <option value="DELETE" <%= value.memberStatus === 'DELETE' ? 'selected' : '' %>>DELETE</option>
+                  <option value="PROCESS" <%= value.memberStatus === 'PROCESS' ? 'selected' : '' %>>BLOCK</option>
+                  <option value="DELETE" <%= value.memberStatus === 'DELETE' ? 'selected' : '' %>>DELETE</option>
                 </select>
               </td>
             </tbody>

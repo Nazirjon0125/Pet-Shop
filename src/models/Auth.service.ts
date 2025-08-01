@@ -23,6 +23,7 @@ class AuthService {
           else resolve(token as string);
         }
       );
+      console.log(`----[AUTH] createToken: ${process.env.SECRET_TOKEN} ------`);
     });
   }
 
