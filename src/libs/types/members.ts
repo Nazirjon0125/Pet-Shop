@@ -14,6 +14,7 @@ export interface Member {
   memberDesc?: string;
   memberImages?: string;
   memberPoints: number;
+  memberOrders: number;
   createdat: Date;
   updatedAt: Date;
 }
@@ -28,6 +29,7 @@ export interface MemberInput {
   memberDesc?: string;
   memberImages?: string;
   memberPoints?: number;
+  memberOrders: number;
 }
 
 export interface LoginInput {

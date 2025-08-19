@@ -13,7 +13,7 @@ export interface Product {
   productPrice: number;
   productLeftCount: number;
   productSize: ProductSize;
-  productVolume: number;
+  productYear: string;
   productDesc?: string;
   productImages: string[];
   productViews: number;
@@ -24,6 +24,7 @@ export interface ProductInquery {
   page: number;
   limit: number;
   productCollection?: ProductCollection;
+  productStatus?: ProductStatus;
   search?: string;
 }
 
@@ -34,7 +35,7 @@ export interface ProductInput {
   productPrice: number;
   productLeftCount: number;
   productSize?: ProductSize;
-  productVolume?: number;
+  productYear?: string;
   productDesc?: string;
   productImages?: string[];
   productViews?: number;

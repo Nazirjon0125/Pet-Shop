@@ -45,7 +45,7 @@
       </ul>
     </div>
 
-    <div class="users-frame">
+  <div class="users-frame">
       <div class="board">
         <div class="user-table">
           <span class="header-name" style="margin-bottom: 30px"
@@ -55,7 +55,7 @@
             <thead class="thead-light">
               <tr class="thead-light">
                 <th scope="col">No</th>
-                 <th scope="col">Image</th>
+                <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Orders</th>
@@ -63,32 +63,90 @@
               </tr>
             </thead>
             <!--  LOOP PRODUCTS: START  -->
-            <% users.map(function(value, key) { %>
-            <tbody style="background: rgb(250, 246, 246)">
-              <td><%= key + 1 %></td>
-              <td><%= value.memberImage %></td>
-              <td><%= value.memberNick %></td>
-              <td><%= value.memberPhone %></td>
-              <td><%= value.memberOrders %></td>
+            <% users.map(function(value, index){ %>
+              <tbody style="background: white">
+                <td><%= index +1 %></td>
+                <td>
+                  <% if (value.memberImages) { %>
+                    <img src="/<%= value.memberImages %>" alt="Member Image"  style="width: 60px; height: 60px; border-radius: 50%" />
+                  <% } else { %>
+                   <img style="width: 60px; height: 60px; border-radius: 50%" src="/img/default.png" alt="Default Image" class="table-img" />
+                  <% } %>
+                </td> 
+                <td><%= value.memberNick %></td>
+                <td><%= value.memberPhone %></td>
+
+                <td class="orders">
+                  <% if (value.orders && value.orders.length > 0) { %>
+                    <label class="orders-label" for="toggle-<%= index %>">
+                      Orders (<%= value.orders.length %>)
+                    </label>
+                    <input type="checkbox" id="toggle-<%= index %>" class="orders-checkbox" />
+                    
+                    <div class="orders-collapse">
+                      <table class="table table-sm table-bordered">
+                        <thead>
+                          <tr>
+                            <th>No</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% value.orders.forEach(function(order, i) { %>
+                            <tr>
+                              <td><%= i + 1 %></td>
+                              <td><%= order.orderTotal %> $</td>
+                              <td><%= order.orderStatus %></td>
+                              <td><%= new Date(order.createdAt).toLocaleString() %></td>
+                            </tr>
+                          <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                  <% } else { %>
+                    No Orders
+                  <% } %>
+                </td>
+              </div>
+
               
-              <td style="width: 13%">
-                <select class="spec-select member-status" id="<%= value._id %>">
-                  <option value="PAUSE" <%= value.memberStatus === 'PAUSE' ? 'selected' : '' %>>ACTIVE</option>
-                  <option value="PROCESS" <%= value.memberStatus === 'PROCESS' ? 'selected' : '' %>>BLOCK</option>
-                  <option value="DELETE" <%= value.memberStatus === 'DELETE' ? 'selected' : '' %>>DELETE</option>
-                </select>
-              </td>
-            </tbody>
-            <% }) %>
+
+                <td style="width: 13%">
+                  <select class="spec-select member-status" id="<%= value._id %>">
+                    <option value="ACTIVE" <%= value.memberStatus === 'ACTIVE' ? 'selected': '' %> >ACTIVE</option>
+                    <option value="BLOCK" <%= value.memberStatus === 'BLOCK' ? 'selected': '' %> >BLOCK</option>
+                    <option value="DELETE" <%= value.memberStatus === 'DELETE' ? 'selected': '' %> >DELETE</option>
+                  </select>
+                </td>
+              </tbody>
+            <% }) %> 
+             <div class="status-table">
+               
+                <div class="status-cell process">
+                  <span>Active</span>
+                  <span class="count"><%= count.find(c => c._id === 'ACTIVE')?.total || 0 %></span>
+                </div>
+                <div class="status-cell paused">
+                  <span>Block</span>
+                  <span class="count"><%= count.find(c => c._id === 'BLOCK')?.total || 0 %></span>
+                </div>
+                <div class="status-cell deleted">
+                  <span>Deleted</span>
+                  <span class="count"><%= count.find(c => c._id === 'DELETE')?.total || 0 %></span>
+                </div>
+              </div>
             <!--  LOOP PRODUCTS: END  -->
           </table>
         </div>
       </div>
     </div>
+    
     <% } %>
   </div>
 
   <script type="text/javascript" src="/js/users.js"></script>
-</body>
+</body>//
 
 <%- include('includes/footer') %>

@@ -94,9 +94,9 @@ memberController.updateMember = async (req: ExtendedRequest, res: Response) => {
   try {
     console.log("updateMember");
     const input: MemberUpdateInput = req.body;
-    if (req.file) input.memberImages = req.file.path.replace(/\\/, "/ ");
+    if (req.file) input.memberImages = req.file.path.replace(/\\/g, "/");
     const result = await memberService.updateMember(req.member, input);
-
+    console.log("rasm", result);
     res.status(HttpCode.OK).json(result);
   } catch (err) {
     console.log("Error getMemberDetail", err);

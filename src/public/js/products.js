@@ -140,7 +140,7 @@ $(function () {
 
       // Rasmlarni preview qilish (cache ni oldini olish uchun vaqt qo'shilgan)
       if (product.images && product.images.length > 0) {
-        $(".update-container .image-preview").each(function (index) {
+        $(".update-preview .image-preview").each(function (index) {
           if (index < product.images.length) {
             $(this).attr(
               "src",

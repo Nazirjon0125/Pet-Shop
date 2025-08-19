@@ -1,4 +1,10 @@
 <%- include('includes/header') %>
+<script>
+  const colors = ['#f0f8ff','#ffe4e1','#e0ffe0','#fff0f5','#f5f5dc'];
+  const container = document.querySelector('.users-container');
+  container.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+</script>
+
 
 <link rel="stylesheet" href="/css/products.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -39,14 +45,13 @@
             <tbody style="background: white">
               <tr>
                 <td><%= key + 1 %></td>
-                <td>
+                <td >
                   <% if (value.productImages && value.productImages.length > 0) { %>
-                    <img src="/<%= value.productImages[0] %>" alt="Product Image" class="table-img" />
+                    <img style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" src="/<%= value.productImages[0] %>" alt="Product Image" class="table-img" />
                   <% } else { %>
-                    <img src="/img/default.png" alt="Default Image" class="table-img" />
+                    <img style="width: 60px; height: 60px; border-radius: 50%" src="/img/default.png" alt="Default Image" class="table-img" />
                   <% } %>
                 </td>
-
                 <td><%= value.productName %></td>
                 <td><%= value.productCollection %></td>
                 <td><%= value.productCollection === 'FISH' ? value.productSize : value.productYear %></td>
@@ -57,6 +62,7 @@
                     <option value="PAUSE" <%= value.productStatus === 'PAUSE' ? 'selected' : '' %>>PAUSE</option>
                     <option value="PROCESS" <%= value.productStatus === 'PROCESS' ? 'selected' : '' %>>PROCESS</option>
                     <option value="DELETE" <%= value.productStatus === 'DELETE' ? 'selected' : '' %>>DELETE</option>
+                    <option value="SOLD-OUT" <%= value.productStatus === 'SOLD-OUT' ? 'selected' : '' %>>SOLD-OUT</option>
                   </select>
                 </td>
                 <td>
@@ -71,9 +77,31 @@
                     </button>
                   </form>
                 </td>
+                  
+             
               </tr>
             </tbody>
           <% }) %>
+        <div class="status-table">
+        <div class="status-cell process">
+          <span>Process Products</span>
+          <span class="count"><%= counts.find(c => c._id === 'PROCESS')?.total || 0 %></span>
+        </div>
+        <div class="status-cell paused">
+          <span>Paused Products</span>
+          <span class="count"><%= counts.find(c => c._id === 'PAUSE')?.total || 0 %></span>
+        </div>
+        <div class="status-cell deleted">
+          <span>Deleted Products</span>
+          <span class="count"><%= counts.find(c => c._id === 'DELETE')?.total || 0 %></span>
+        </div>
+        <div class="status-cell soldout">
+          <span>Sold-Out Products</span>
+          <span class="count"><%= counts.find(c => c._id === 'SOLD-OUT')?.total || 0 %></span>
+        </div>
+      </div>
+
+
         </table>
 
         <div class="long-input" style="align-items: flex-end; margin-top: 25px;">
@@ -138,7 +166,7 @@
 
           <div class="half-input" id="product-volume" style="display:none;">
             <label>Animals Year</label>
-            <select name="productVolume" class="product-volume">
+            <select name="productYear" class="product-volume">
               <option value="ONE_WEEK">ONE WEEK</option>
               <option value="TWO_WEEK">TWO WEEK</option>
               <option value="THREE_WEEK">THREE WEEK</option>
@@ -281,7 +309,7 @@
           <div class="media-frame">
             <% for(let i = 1; i <= 5; i++) { %>
               <div class="upload-img-box">
-                <img src="/img/upload.svg" class="image-preview" />
+                <img src="/img/upload.svg" class="update-preview" />
                 <input 
                   type="file" 
                   name="productImages" 

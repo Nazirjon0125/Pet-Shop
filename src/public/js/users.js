@@ -1,4 +1,5 @@
 console.log("Users frontend javascript file");
+console.log("Users frontend javascript file");
 
 $(function () {
   $(".member-status").on("change", function (e) {
@@ -22,5 +23,17 @@ $(function () {
         console.log(err);
         alert("User updat failed!");
       });
+  });
+});
+
+document.querySelectorAll(".toggle-orders-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const targetId = btn.getAttribute("data-target");
+    const ordersDiv = document.getElementById(targetId);
+    if (ordersDiv.style.display === "none") {
+      ordersDiv.style.display = "block";
+    } else {
+      ordersDiv.style.display = "none";
+    }
   });
 });

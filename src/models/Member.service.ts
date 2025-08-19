@@ -86,8 +86,9 @@ class MemberService {
     const memberId = member._id;
 
     const result = await this.memberModel
-      .findOneAndUpdate({ _id: memberId }, input, { new: true })
+      .findOneAndUpdate({ _id: memberId }, { $set: input }, { new: true })
       .exec();
+    console.log("storage", result);
     if (!result)
       throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATED_FAILED);
     return result;
@@ -160,7 +161,17 @@ class MemberService {
 
   public async getUsers(): Promise<Member[]> {
     const result = await this.memberModel
-      .find({ memberType: MemberType.USER })
+      .aggregate([
+        { $match: { memberType: MemberType.USER } },
+        {
+          $lookup: {
+            from: "orders", // orders collection nomi
+            localField: "_id",
+            foreignField: "memberId",
+            as: "orders",
+          },
+        },
+      ])
       .exec();
 
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
@@ -178,6 +189,19 @@ class MemberService {
       throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATED_FAILED);
 
     return result;
+  }
+
+  public async userCount(): Promise<any> {
+    const count = await this.memberModel.aggregate([
+      {
+        $group: {
+          _id: "$memberStatus",
+          total: { $sum: 1 },
+        },
+      },
+    ]);
+
+    return count;
   }
 }
 

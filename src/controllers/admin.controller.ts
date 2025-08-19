@@ -109,9 +109,10 @@ adminController.getUsers = async (req: Request, res: Response) => {
   try {
     console.log("getUsers");
     const result = await memberService.getUsers();
+    const count = await memberService.userCount();
     console.log("result", result);
 
-    res.render("users", { users: result });
+    res.render("users", { users: result, count });
   } catch (err) {
     console.log("Error getUsers", err);
     res.redirect("/admin/login");
@@ -161,4 +162,5 @@ adminController.verifyAdmin = (
     );
   }
 };
+
 export default adminController;

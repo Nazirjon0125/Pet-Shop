@@ -28,11 +28,17 @@ class ProductService {
     console.log("getProducts INQUIRY:", inquiry);
 
     const match: T = { productStatus: ProductStatus.PROCESS };
-    if (inquiry.productCollection)
+
+    // Faqat inquiry.productCollection mavjud bo‘lsa filter qo‘shamiz
+    if (inquiry.productCollection) {
+      console.log("Filtering by productCollection:", inquiry.productCollection);
       match.productCollection = inquiry.productCollection;
+    }
+    // Search bo‘lsa qo‘shamiz
     if (inquiry.search) {
       match.productName = { $regex: new RegExp(inquiry.search, "i") };
     }
+
     const sort: T =
       inquiry.order === "productPrice"
         ? { [inquiry.order]: 1 }
@@ -44,7 +50,11 @@ class ProductService {
         { $skip: (inquiry.page * 1 - 1) * inquiry.limit },
         { $limit: inquiry.limit * 1 },
       ])
+
       .exec();
+    console.log("Pagination skip:", (inquiry.page - 1) * inquiry.limit);
+    console.log("Pagination limit:", inquiry.limit);
+    console.log("MongoDB match filter:", match);
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
     return result;
   }
@@ -129,5 +139,39 @@ class ProductService {
     console.log("deleteChosenProduct=>", result);
     return result;
   }
+
+  public async productCount(): Promise<any> {
+    const conuts = await this.productModel.aggregate([
+      {
+        $group: {
+          _id: "$productStatus",
+          total: { $sum: 1 },
+        },
+      },
+    ]);
+
+    return conuts;
+  }
+
+  // public async totalProduct(): Promise<number> {
+  //   const pausedCount = await this.productModel.countDocuments({
+  //     productStatus: "PAUSE",
+  //   });
+  //   console.log("Paused:", pausedCount);
+  //   const deletedCount = await this.productModel.countDocuments({
+  //     productStatus: "DELETE",
+  //   });
+  //   console.log("Paused:", deletedCount);
+  //   const SoldOutCount = await this.productModel.countDocuments({
+  //     productStatus: "SOLD-OUT",
+  //   });
+  //   console.log("Deleted:", SoldOutCount);
+  //   const count = await this.productModel.countDocuments().exec();
+  //   console.log("dashboardProduct", count);
+  //   return count;
+  //   return pausedCount;
+  //   return deletedCount;
+  //   return SoldOutCount;
+  // }
 }
 export default ProductService;
