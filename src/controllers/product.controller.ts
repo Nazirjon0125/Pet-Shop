@@ -45,7 +45,6 @@ productController.getProduct = async (req: ExtendedRequest, res: Response) => {
     console.log("getProduct");
 
     const { id } = req.params;
-    console.log("req.memeber:", req.member);
     const memberId = req.member?._id
       ? shapeIntoMongooseObjectId(req.member._id)
       : null;
@@ -80,7 +79,6 @@ productController.createNewProduct = async (
 ) => {
   try {
     console.log("createNewProduct");
-    console.log("req.body:", req.body);
 
     if (!req.files?.length)
       throw new Errors(HttpCode.INTERNAL_SERVICE_ERROR, Message.CREATE_FAILED);
@@ -90,9 +88,8 @@ productController.createNewProduct = async (
       return ele.path.replace(/\\/g, "/");
     });
 
-    console.log("rasm", data);
     await productService.createNewProduct(data);
-    console.log("productCollection:", data.productCollection);
+
     res.send(
       `Hi <script> alert(" Sucessful creation"); window .location.replace('/admin/product/all') </script>`
     );
@@ -121,6 +118,22 @@ productController.updateChosenProduct = async (req: Request, res: Response) => {
 
     const result = await productService.updateChosenProduct(id, req.body);
     res.status(HttpCode.OK).json({ data: result });
+  } catch (err) {
+    console.log("Error, updateChosenproduct", err);
+    if (err instanceof Errors) res.status(err.code).json(err);
+    else res.status(Errors.standard.code).json(Errors.standard);
+  }
+};
+
+productController.leftCount = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const leftCount = await productService.leftCount(id);
+    console.log("leftCount1", leftCount);
+    if (!leftCount) return res.status(404).send("Product not found");
+    console.log("leftCount2", leftCount);
+
+    return res.status(200).json(leftCount);
   } catch (err) {
     console.log("Error, updateChosenproduct", err);
     if (err instanceof Errors) res.status(err.code).json(err);

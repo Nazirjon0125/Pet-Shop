@@ -38,6 +38,8 @@ router.get(
   productController.getProduct
 );
 
+router.patch("/product/decrement/:id", productController.leftCount);
+
 /**Order */
 
 router.post(

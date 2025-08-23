@@ -125,11 +125,35 @@ class ProductService {
     input: ProductUpdateInput
   ): Promise<Product> {
     id = shapeIntoMongooseObjectId(id);
+
     const result = await this.productModel
       .findOneAndUpdate({ _id: id }, input, { new: true })
       .exec();
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.UPDATED_FAILED);
     return result;
+  }
+
+  public async leftCount(id: string): Promise<Product> {
+    id = shapeIntoMongooseObjectId(id);
+    console.log("Received ID:", id);
+
+    const product = await this.productModel.findById(id);
+    console.log("Found product:", product);
+
+    if (!product) throw new Errors(HttpCode.NOT_FOUND, Message.UPDATED_FAILED);
+
+    if (product.productLeftCount > 0) {
+      product.productLeftCount -= 1;
+
+      if (product.productLeftCount === 0) {
+        product.productStatus = ProductStatus.SOLDOUT;
+      }
+
+      await product.save();
+      console.log("Updated product:", product);
+    }
+
+    return product;
   }
 
   public async deleteChosenProduct(id: string): Promise<Product> {

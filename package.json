@@ -1,7 +1,7 @@
 {
   "name": "pet-shop",
   "version": "1.0.0",
-  "description": "This is my first Seller project",
+  "description": "This is my first Pet-Shop project",
   "type": "commonjs",
   "main": "src/server.ts",
   "scripts": {
