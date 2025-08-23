@@ -27,7 +27,9 @@ class ProductService {
   public async getProducts(inquiry: ProductInquery): Promise<Product[]> {
     console.log("getProducts INQUIRY:", inquiry);
 
-    const match: T = { productStatus: ProductStatus.PROCESS };
+    const match: T = {
+      productStatus: { $in: [ProductStatus.PROCESS, ProductStatus.SOLDOUT] },
+    };
 
     // Faqat inquiry.productCollection mavjud bo‘lsa filter qo‘shamiz
     if (inquiry.productCollection) {

@@ -26,6 +26,7 @@ memberController.getAdmin = async (req: Request, res: Response) => {
     else res.status(Errors.standard.code).json(Errors.standard);
   }
 };
+
 memberController.signup = async (req: Request, res: Response) => {
   try {
     console.log("signup");

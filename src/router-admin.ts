@@ -51,11 +51,6 @@ routerAdmin.post(
   productController.deleteChosenProduct
 );
 
-// routerAdmin.get(
-//   "/product/dashboard",
-//   adminController.verifyAdmin,
-//   productController.dashboardProduct
-// );
 /** User */
 routerAdmin.get(
   "/user/all",
