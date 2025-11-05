@@ -6,11 +6,12 @@ import routerAdmin from "./router-admin";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import { MORGAN_FORMAT } from "./libs/config";
-import { T } from "./libs/types/common";
+import { Server as SocketIOServer } from "socket.io";
+import http from "http";
 
 import session from "express-session";
 import ConnectMongoDB from "connect-mongodb-session";
-
+import { T } from "./libs/types/common";
 const MongoDBStore = ConnectMongoDB(session);
 const store = new MongoDBStore({
   uri: String(process.env.MONGO_URL),
@@ -52,4 +53,22 @@ app.set("view engine", "ejs");
 app.use("/admin", routerAdmin); //BSSR: EJS
 app.use("/", router); // SPA: REACT
 
+const server = http.createServer(app);
+const io = new SocketIOServer(server, {
+  cors: {
+    origin: true,
+    credentials: true,
+  },
+});
+
+let summeryClient = 0;
+io.on("connection", (socket) => {
+  summeryClient++;
+  console.log(`Connetion & total [${summeryClient}]`);
+
+  socket.on("disconnect", () => {
+    summeryClient--;
+    console.log(`Disconnetion & total [${summeryClient}]`);
+  });
+});
 export default app;
