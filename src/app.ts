@@ -71,4 +71,4 @@ io.on("connection", (socket) => {
     console.log(`Disconnetion & total [${summeryClient}]`);
   });
 });
-export default app;
+export default server;
